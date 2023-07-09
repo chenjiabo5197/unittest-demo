@@ -7,6 +7,11 @@ import sys
 import unittest
 from unittest import case, suite
 
+"""
+    本文件可以用于执行单个测试用例
+    用法(在case目录下)
+        python run_single_case.py -f 要执行的case所在的文件名 -m 要执行的case函数名
+"""
 
 def get_parameter():
     """获取传入的参数"""
