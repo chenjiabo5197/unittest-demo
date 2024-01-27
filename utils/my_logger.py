@@ -20,12 +20,15 @@ class MyLogger(object):
     def __init__(self, log):
         if not self._first_init:
             return
-        conf_file_log_level = utils.get_config_field("log", "file_log_level")
-        conf_stream_log_level = utils.get_config_field("log", "stream_log_level")
-        self.file_log_level = self.get_log_level(self, conf_file_log_level)
-        self.stream_log_level = self.get_log_level(self, conf_stream_log_level)
+        self.file_log_level = self.get_log_level(self, utils.get_config_field("log", "file_log_level"))
+        self.stream_log_level = self.get_log_level(self, utils.get_config_field("log", "stream_log_level"))
         # 创建logger对象
         self.logger = logging.getLogger(log)
+        self.init_logger()
+        self._first_init = False
+    
+    def init_logger(self):
+        """初始化对象"""
         self.logger.setLevel(logging.DEBUG)
         # log输出格式
         formatter = logging.Formatter(fmt="%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s",
@@ -50,7 +53,6 @@ class MyLogger(object):
         self.logger.addHandler(file_handler)
         self.logger.info("logger init success, file_level={}, stream_level={}".
                          format(self.file_log_level, self.stream_log_level))
-        self._first_init = False
 
     def __new__(cls, *args, **kwargs):
         """单例"""
