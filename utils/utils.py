@@ -4,7 +4,7 @@
 """
 from configparser import ConfigParser
 
-config_path = "../conf/config.ini"
+config_path = "conf/config.ini"
 
 
 def get_config_field(scope, field_name):

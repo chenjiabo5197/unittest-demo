@@ -9,7 +9,7 @@ import time
 import utils
 from logging.handlers import RotatingFileHandler
 
-log_path = "./log/"
+log_path = "log/"
 
 
 class MyLogger(object):

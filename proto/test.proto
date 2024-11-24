@@ -1,0 +1,17 @@
+syntax="proto3";
+
+package test;
+
+message request{
+  string message = 1;
+}
+
+message response{
+  string message = 1;
+}
+
+// 服务端和客户端双流
+service StreamTest{
+  rpc BothStream (stream request) returns (stream response) {}
+}
+

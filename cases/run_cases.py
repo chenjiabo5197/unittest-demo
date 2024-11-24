@@ -6,13 +6,18 @@ import os.path
 import time
 import unittest
 import sys
-sys.path.append("..")
-from utils import my_logger, my_html_test_runner
+
+# 获取当前文件的绝对路径，并找到项目的根目录
+current_file_path = os.path.abspath(__file__)
+project_root_path = os.path.dirname(os.path.dirname(current_file_path))
+# 将项目的根目录添加到sys.path中
+sys.path.append(project_root_path)
+from utils import my_logger, my_html_test_runner, server
 
 logger = my_logger.MyLogger(__name__).get_logger()
 
-cases_path = "./"
-report_path = "../report/"
+cases_path = "case/"
+report_path = "report/"
 
 
 def get_all_cases():
@@ -23,19 +28,29 @@ def get_all_cases():
     return suite
 
 
+def start_server():
+    """"""
+    server.start_serve(8080)
+
+
+def stop_server():
+    """"""
+    server.stop_serve()
+
+
 def set_html_report():
     """设置生成的HTML测试报告"""
     if not os.path.exists(report_path):
         os.makedirs(report_path)
     time_struct = time.localtime(int(time.time()))
     str_time = time.strftime("%Y%m%d%H%M%S", time_struct)
-    report_abspath = os.path.join(report_path, "demo_"+str_time+".html")
+    report_abspath = os.path.join(report_path, "demo_" + str_time + ".html")
     logger.info("save report path={}".format(report_abspath))
     return report_abspath
 
 
 def get_result_data(result):
-    data = {"demo": {"all_case":0, "pass": 0, "fail": 0}, "test": {"all_case":0, "pass": 0, "fail": 0}}
+    data = {"demo": {"all_case": 0, "pass": 0, "fail": 0}, "test": {"all_case": 0, "pass": 0, "fail": 0}}
     rmap = {}
     classes = []
     for n, t, o, e in result:
@@ -81,4 +96,3 @@ if __name__ == "__main__":
 
     fp.close()
     logger.info("execute all case, close")
-
